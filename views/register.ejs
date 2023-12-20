@@ -1,18 +1,18 @@
 <%- include('./partials/header.ejs') %>
 
-<div class="w-full h-screen bg-center bg-cover bg-[url('https://images.unsplash.com/photo-1496715976403-7e36dc43f17b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] flex items-center justify-center">
-    <div class="h-[70vh] w-80 p-4  m-2 bg-zinc-100 rounded-lg ">
+<div class="w-full h-screen bg-center bg-cover bg-[url('https://images.unsplash.com/photo-1533035353720-f1c6a75cd8ab?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] flex items-center justify-center">
+    <div class="h-[70vh] w-80 p-4  m-2 bg-zinc-100 rounded-lg">
         <div class=" flex justify-center"><img class="w-12 h-12" src="https://i.pinimg.com/originals/d3/d1/75/d3d175e560ae133f1ed5cd4ec173751a.png" alt="pin logo" /></div>
         <h1 class="text-2xl font-semibold text-center tracking-tighter ">Welcome to Pinterest</h1>
-        <form  action="/login" method="post">
+        <form  action="/register" method="post">
             <input  class="w-full px-3 py-2 mt-2 block border-2 rounded-md" type="text" name="username" placeholder="username" >
+            <input  class="w-full px-3 py-2 mt-2 block border-2 rounded-md" type="email" name="email" placeholder="email" >
             <input class="w-full px-3 py-2 mt-2 block border-2 rounded-md" type="password" name="password" placeholder="password" >
-            <a class="text-sm px-1 py-2 mt-1 text-zinc-600 inline-block underline " href="#">Forgot password?</a>
-            <input class="w-full text-white text-lg  bg-red-600 px-3 py-2 mt-2 block rounded-md" type="submit" value="Log in" > </input>    
+            <input class="w-full text-white text-lg  bg-red-600 px-3 py-2 mt-2 block rounded-md" type="submit" value="Register" > </input>    
         </form>
         <div class="mt-1 text-center text-zinc-600">OR</div>
-        <div class="mt-1 text-center text-xs text-zinc-600">Not on Pinterest yet!</div>
-        <a class="w-full text-white text-lg text-center  bg-blue-500 px-3 py-2 mt-1 mb-1 block rounded-md" href="/register ">Sign up</a>
+        <div class="mt-1 text-center text-xs text-zinc-600">Already on Pinterest!</div>
+        <a class="w-full text-white text-lg text-center  bg-blue-500 px-3 py-2 mt-1 mb-1 block rounded-md" href="/ ">Log in</a>
         <p class="mt-2 text-xs text-zinc-600 justify-center text-center items-center">By continuing, you agree to Pinterest's Terms of Service; Opens a new tab and acknowledge that you've read our Privacy Policy.</p>
     </div>
 </div>
