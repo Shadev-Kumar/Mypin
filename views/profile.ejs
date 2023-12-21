@@ -5,16 +5,16 @@
     <input type="file" name="image">
   </form>
 
-  <div class="flex flex-col mt-20 items-center text-white">
+  <div class="flex flex-col mt-10 items-center text-white">
     <div class="relative">
-      <span id="uploadicon" class="w-6 h-6 hover:bg-zinc-600  cursor-pointer absolute bottom-0 right-0 rounded-full flex items-center justify-center bg-zinc-200"><i class="text-zinc-800 hover:text-zinc-200 ri-pencil-fill"></i></span>
+      <span id="uploadicon" class="w-6 h-6 hover:bg-zinc-600  cursor-pointer absolute bottom-0 right-2 rounded-full flex items-center justify-center bg-zinc-200"><i class="text-zinc-800 hover:text-zinc-200 ri-pencil-fill"></i></span>
       <div class="w-32 h-32 rounded-full bg-zinc-200  overflow-hidden">
         <img class="w-full h-full object-cover object-center"  
         src="/images/uploads/<%= user.profileImage %>" alt="" >
       </div>
     </div>
-    <h1 class="text-4xl font-semibold mt-5 ">Shadev Kumar</h1>
-    <h3 class="text-md font-medium mt-2">@Iam_shadev</h3>
+    <h1 class="text-4xl font-semibold mt-5 "><%= user.name %></h1>
+    <h3 class="text-md font-medium mt-2">@<%= user.username %></h3>
       <div class="flex flex-row">
         <div class="flex flex-col items-center ">
           <h1 class="text-xl font-semibold">261</h1>
@@ -31,10 +31,12 @@
   <div class="cards flex flex-wrap gap-10 px-10 mt-10 text-white ">
     <div class="card">
       <div class="w-52 h-40 rounded-lg bg-zinc-200  overflow-hidden">
-        <img class="w-full h-full object-cover" src="https://i.pinimg.com/474x/79/df/79/79df79191c01f1bebeb7d2cab85b93e4.jpg" alt="">
+        <img class="w-full h-full object-cover" 
+        src="/images/uploads/<%= user?.posts[0]?.image %>" 
+        alt="">
       </div>
-      <h3 class="text-xl font-semibold mt-3">All Pins</h3>
-      <h3 class="text-sm font-light opacity-60 ">29 pins</h3>
+      <a href="/showposts" class="inline-block text-xl font-semibold mt-3">Created Pins</a>
+      <h3 class="text-sm font-light opacity-60 "><%= user.posts.length %> Pins</h3>
     </div>
   </div>
 </div>
