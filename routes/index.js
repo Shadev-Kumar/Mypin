@@ -28,19 +28,58 @@ router.get('/create', isLoggedIn, async function (req, res, next) {
   res.render('create', { user, nav: true })
 })
 
-router.get('/showposts', isLoggedIn, async function (req, res, next) {
+router.get('/createdpins', isLoggedIn, async function (req, res, next) {
   const user = await UserModel.findOne({
     username: req.session.passport.user,
   }).populate('posts')
-  res.render('showposts', { user, nav: true })
+  res.render('createdpins', { user, nav: true })
 })
 
-router.get('/feed', isLoggedIn, async function (req, res, next) {
+router.get('/like/post/:id', isLoggedIn, async function (req, res, next) {
   const user = await UserModel.findOne({ username: req.session.passport.user })
-  const posts = await postsModel.find().populate('user')
-
-  res.render('feed', { user,posts, nav: true })
+  const post = await postsModel.findOne({ _id: req.params.id })
+  if (post.likes.indexOf(user._id) === -1) {
+    post.likes.push(user._id)
+  } else {
+    post.likes.splice(post.likes.indexOf(user._id), 1)
+  }
+  await post.save()
+  res.redirect(`/showpost/${req.params.id}`)
 })
+
+router.get('/showpost/:post_id', isLoggedIn, async function (req, res, next) {
+  try {
+    const requestedPostId = req.params.post_id;
+    const user = await UserModel.findOne({ username: req.session.passport.user })
+    const allpost = await postsModel.find().populate('user');
+
+    const selectedPost = allpost.find(post => post._id.toString() === requestedPostId);
+
+    if (!selectedPost) {
+      return res.status(404).send('Post not found');
+    }
+    res.render('showpost', {allpost, userPost: selectedPost, nav: true,user });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
+// router.get('/feed', isLoggedIn, async function (req, res, next) {
+//   const user = await UserModel.findOne({ username: req.session.passport.user })
+//   const posts = await postsModel.find().populate('user')
+//   console.log(posts)
+//   res.render('feed', { user,posts, nav: true })
+// })
+router.get('/feed', isLoggedIn, async function (req, res, next) {
+  try {
+    const posts = await postsModel.find().populate('user');
+    res.render('feed', { posts, nav: true });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
 
 router.post(
   '/createpost',
@@ -89,8 +128,7 @@ router.post('/register', function (req, res) {
   })
 })
 
-router.post(
-  '/login',
+router.post('/login',
   passport.authenticate('local', {
     successRedirect: '/profile',
     failureRedirect: '/',
