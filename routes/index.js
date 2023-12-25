@@ -65,12 +65,17 @@ router.get('/showpost/:post_id', isLoggedIn, async function (req, res, next) {
   }
 });
 
-// router.get('/feed', isLoggedIn, async function (req, res, next) {
-//   const user = await UserModel.findOne({ username: req.session.passport.user })
-//   const posts = await postsModel.find().populate('user')
-//   console.log(posts)
-//   res.render('feed', { user,posts, nav: true })
-// })
+router.get('/searchpins/:query', isLoggedIn, async function (req, res, next) {
+  const regexPattern = new RegExp(`${req.params.query}`, 'i');
+ const pins = await postsModel.find({
+  $or: [
+    { title: regexPattern },
+    { description: regexPattern },
+  ]
+}).populate('user');
+  res.json(pins)
+})
+
 router.get('/feed', isLoggedIn, async function (req, res, next) {
   try {
     const posts = await postsModel.find().populate('user');

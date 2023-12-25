@@ -1,0 +1,42 @@
+<div class="search w-2/4 mb-4 border-2 border-zinc-700 flex items-center justify-between px-2 py-1 rounded-full">
+    <input id="inputsearchpins" class="ml-1 w-full items-center bg-zinc-800 outline-none text-zinc-400" type="text" placeholder="Search pins">
+    <i class="text-white ri-search-line text-lg mx-2 "></i>
+    <!-- No need to close the input tag -->
+    <div class="searchedpins absolute top-full flex flex-wrap gap-10 z-50 w-2/4 min-h-[40vh] px-6 py-4 bg-zinc-700 overflow-hidden shadow-md rounded-3xl" style="display: none;">
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js" integrity="sha512-b94Z6431JyXY14iSXwgzeZurHHRNkLt9d6bAHt7BZT38eqV+GyngIi/tVye4jBKPYQ2lBdRs0glww4fmpuLRwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const inp = document.querySelector("#inputsearchpins");
+    let clutter = "";
+    const searchedPins = document.querySelector(".searchedpins");
+
+    inp.addEventListener("input", function () {
+        const inputValue = inp.value.trim();
+        if (inputValue === '') {
+            searchedPins.style.display = 'none';
+            searchedPins.innerHTML = '';
+            return;
+        }
+
+        axios.get(`/searchpins/${inputValue}`)
+            .then(function (data) {
+                clutter = "";
+                data.data.forEach(function (elem) {
+                    clutter += `<a href="/showpost/${elem._id}">
+                    <div class="card w-32 ">
+                        <div class="w-full h-40 rounded-lg bg-zinc-200  overflow-hidden">
+                            <img class="w-full h-full object-cover" src="/images/uploads/${elem.image}" alt="">
+                        </div>
+                        <h3 class="text-sm font-light opacity-60 mt-2 ">${elem.title} </h3>
+                        <h5 class="text-xs font-light opacity-60 mt-1 ">@${elem.user.username} </h5>
+                    </div>
+                 </a>`;
+                });
+
+                searchedPins.style.display = 'flex';
+                searchedPins.innerHTML = clutter;
+            });
+    });
+</script>

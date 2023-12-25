@@ -1,6 +1,6 @@
 <%- include('./partials/header.ejs') %>
 
-<div class="min-h-screen w-full bg-zinc-800 pt-1 ">
+<div class="min-h-screen w-full bg-zinc-800 pt-1 z-0 ">
   <form id="uploadform" class="hidden" action="/fileupload" method="post" enctype="multipart/form-data">
     <input type="file" name="image">
   </form>
@@ -9,7 +9,7 @@
     <div class="relative">
       <span id="uploadicon" class="w-6 h-6 hover:bg-zinc-600  cursor-pointer absolute bottom-0 right-2 rounded-full flex items-center justify-center bg-zinc-200"><i class="text-zinc-800 hover:text-zinc-200 ri-pencil-fill"></i></span>
       <div class="w-32 h-32 rounded-full bg-zinc-200  overflow-hidden">
-        <img class="w-full h-full object-cover object-center"  
+        <img class="w-full h-full object-cover "  
         src="/images/uploads/<%= user.profileImage %>" alt="" >
       </div>
     </div>
